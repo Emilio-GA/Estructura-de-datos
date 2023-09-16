@@ -1,0 +1,8 @@
+/mnt/c/Users/egalv/Desktop/ej04_juego_letras/cmake-build-debug/CMakeFiles/cantidad_letras.dir
+/mnt/c/Users/egalv/Desktop/ej04_juego_letras/cmake-build-debug/CMakeFiles/diccionario.dir
+/mnt/c/Users/egalv/Desktop/ej04_juego_letras/cmake-build-debug/CMakeFiles/partida_letras.dir
+/mnt/c/Users/egalv/Desktop/ej04_juego_letras/cmake-build-debug/CMakeFiles/palabras_validas_diccionario.dir
+/mnt/c/Users/egalv/Desktop/ej04_juego_letras/cmake-build-debug/CMakeFiles/partida_letras_eficiente.dir
+/mnt/c/Users/egalv/Desktop/ej04_juego_letras/cmake-build-debug/CMakeFiles/doc_doxygen.dir
+/mnt/c/Users/egalv/Desktop/ej04_juego_letras/cmake-build-debug/CMakeFiles/edit_cache.dir
+/mnt/c/Users/egalv/Desktop/ej04_juego_letras/cmake-build-debug/CMakeFiles/rebuild_cache.dir

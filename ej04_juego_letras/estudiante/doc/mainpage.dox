@@ -1,0 +1,173 @@
+/*! \mainpage ESTRUCTURA DE ÁRBOL PARA EL DICCIONARIO Y SOLVER
+
+# Introducción
+
+En esta práctica retomaremos el juego de las letras, manejando una estructura de datos alternativa
+para tratar de dar una solución más eficiente al mismo.
+
+El juego de las letras consiste en formar la mejor palabra posible, la que de más puntos o la que sea más larga, según
+modo de juego; a partir de un conjunto de letras extraídas al azar de una bolsa.
+
+<span  style="color:blue">EJERCICIO 1 - ITERADOR DEL DICCIONARIO.</span>
+
+ La estructura que actualmente guarda las palabras es un árbol. Procedemos con un ejemplo:
+
+@image html ejemploarbol.png
+
+ Además, tenemos un iterador del árbol que salta de nodo en nodo, pero lo que ahora queremos es
+<span  style="color:red">un iterador sobre este árbol que permita visitar las palabras por orden alfabético</span>.
+Para ello irá recorriendo cada uno de los nodos de nuestro árbol, y parándose en cada uno de los nodos que esté marcado
+como final de palabra válida. Este iterador almacenará en su interior un <span  style="color:blue">iterador del árbol</span> y una  <span  style="color:blue">string</span> que representa
+la palabra actual que estamos visitando.
+
+@image html ejemploiterador.png
+
+
+
+
+<span  style="color:blue">EJERCICIO 2.1 - CONTEO DE OCURRENCIAS EN EL ÁRBOL.</span>
+
+ Este ejercicio se basa en la creación de la función <span  style="color:red">getOccurrences(char c) debe devolver el
+ número de ocurrencias del carácter que se pasa como argumento en nuestro árbol</span>   Para implementar esta función
+ de forma recursiva, necesitaremos una función auxiliar, que implementaremos como privada, y que recibirá como parámetros
+ el carácter con el que estamos trabajando y el nodo en el que nos encontramos int getOccurrences(node current_node, char c).
+ Dicha función deberá contar las ocurrencias de la letra en el subárbol que cuelga del nodo current_node. Aquí un ejemplo con la "a":
+
+@image html ejemploocurrencias.png
+
+
+<span  style="color:blue">EJERCICIO 2.2 - CONTEO DE USOS EN EL DICCIONARIO.</span>
+
+ Este ejercicio se basa en la creación de la función <span  style="color:red">int getTotalUsages(char c) Esta función se
+encarga de contar el número de usos de la letra para formar palabras en el diccionario</span>. De nuevo, vamos a resolver
+este problema utilizando una función auxiliar que trabaje de forma recursiva.
+pair<int, int> getTotalUsages(node curr_node, char c). Esta función nos va a devolver una pareja de valores, el número
+de ocurrencias del carácter en los nodos que cuelgan del nodo actual, y el número de palabras que terminan por debajo
+el nodo actual. Aquí un ejemplo con la "a" y desde el primer nodo:
+
+@image html ejemplousos.png
+
+
+<span  style="color:blue">EJERCICIO 3 - SOLVER INICIAL.</span>
+
+ <span  style="color:red">Solver es una clase que tiene que ofrecer la mejor solución para una partida y modo de juego determinado</span>. Como esta solución no tiene
+por qué ser única (puede haber varias palabras con una misma puntuación), necesitamos poder ofrecer un conjunto de
+palabras con una misma puntuación. Sus atributos son un <span  style="color:blue">Dictionary</span> con
+el diccionario de palabras permitidas y un <span  style="color:blue">LettersSet</span> con la información de las letras
+para poder formar sus soluciones. La función que se encarga de crear la solución es:
+ <span  style="color:red">pair< vector<string>, int > getSolutions(const vector<char> & available_letters, bool score_game)</span>
+ Funciona de la siguiente forma:
+
+@image html ejemplosolver.png
+
+
+<span  style="color:blue">EJERCICIO 4 - ITERADOR DE PALABRAS VÁLIDAS.</span>
+
+ <span  style="color:red">Es mucho más eficiente recorrer solamente aquellas ramas del árbol que nos van a permitir formar palabras,
+ignorando aquellas ramificaciones que contengan letras que no tenemos disponibles.</span>. Para cumplir esto, crearemos
+un iterador sobre el diccionario. Sus atributos son un <span  style="color:blue">multiset<char></span> con las
+letras permitidas, un <span  style="color:blue">int</span> con el nivel del nodo actual, un <span  style="color:blue">node</span>
+ con el nodo actual y un <span  style="color:blue">string</span> con la palabra. Funciona de la siguiente forma:
+
+@image html ejemploitersolver.png
+
+<span  style="color:blue">EJERCICIO 5 - SOLVER EFICIENTE.</span>
+
+ <span  style="color:red">o Solver que ataque el problema de las letras con mejor eficiencia en tiempo que el anterior</span>,es decir, utilizando
+el nuevo iterador. Sus atributos son un <span  style="color:blue">Dictionary</span> con
+el diccionario de palabras permitidas y un <span  style="color:blue">LettersSet</span> con la información de las letras
+para poder formar sus soluciones. La función que se encarga de crear la solución es:
+<span  style="color:red">pair< vector<string>, int > getSolutionsEficiente(const vector<char> & available_letters, bool score_game)</span>
+Funciona de la siguiente forma:
+
+@image html ejemplosolvereficiente.png
+
+<span  style="color:blue">EJERCICIO 6 - ANÁLISIS DE EFICIENCIA.</span>
+
+Este ejercicio se basa en comparar la eficiencia de las funciones getSolutionsEficiente y getSolutions,
+y será entregado en archivo aparte.
+
+
+
+# Ejecutables
+
+
+## diccionario.cpp  (comprueba el iterador del diccionario):
+ Se carga el contenido del archivo que se pasa como argumento en un diccionario con
+ estructura de árbol. Se recorre el diccionario creado con un iterador, y se imprimen por pantalla todas sus
+ palabras.
+
+>_diccionario_ \<diccionario\>
+@param "<diccionario>" Diccionario donde están las palabras validas.
+
+En la siguiente imagen se muestra de forma dinámica su funcionamiento
+
+@image html ejemplocompiter.png
+
+
+
+## cantidad_letras.cpp (comprueba las funciones getOccurrences y getTotalUsages )
+ Crea el LettersSet y el Dictionary con la información de los argumentos, y para cada letra del
+ diccionario calculará el número de veces que se usa esa letra y el número de ocurrencias de la letra
+ en la estructura de diccionario.
+
+>_cantidad_letras_ \<diccionario\> \<letras\>
+@param "<diccionario>" Diccionario donde están las palabras validas.
+@param "<letras>" Fichero con las letras y sus respectivas repeticiones y puntuación.
+
+En la siguiente imagen se muestra de forma dinámica su funcionamiento
+
+@image html ejemplocomprecu.png
+
+
+## partida_letras.cpp (comprueba la clase Solver )
+ Se encarga de construir el LettersSet para la partida a partir del archivo de letras,
+ el Dictionary con las palabras que se consideran soluciones correctas, el Solver que va a jugar la
+ partida y la LettersBag que se utilizará para extraer las letras. Una vez construidos los TDAs
+ necesarios, extraerá las letras con las que se jugará la partida, utilizará el Solver (getSolutions) para buscar las
+ soluciones, e imprimirá por pantalla tanto las letras para la partida como las mejores soluciones que
+ se pueden obtener con dichas letras y la puntuación de dichas soluciones.
+
+>_partida_letras_ \<diccionario\> \<letras\> \<modo\> \<cantletras\>
+@param "<diccionario>" Diccionario donde están las palabras validas.
+@param "<letras>" Fichero con las letras y sus respectivas repeticiones y puntuación.
+@param "<modo>" Modo de juego (L = longitud, P = puntuación)
+@param "<cantletras>" Cantidad de letras para la partida.
+
+En la siguiente imagen se muestra de forma dinámica su funcionamiento que es igual de la función getSoluciones
+
+@image html ejemplosolver.png
+
+## palabras_validas_diccionario.cpp (comprueba el Iterador de palabras válidas)
+ Se carga el contenido del archivo que se pasa como argumento en un diccionario con
+ estructura de árbol. El resto de argumentos que se pasan en la llamada al programa son las letras disponibles
+ que se utilizan para formar palabras. Se recorre el diccionario creado con un iterador, y se imprimen por pantalla
+ sus palabras válidas según las letras especificadas.
+
+>_palabras_validas_diccionario_ \<diccionario\> \<letras\> \<modo\> \<cantletras\>
+@param "<diccionario>" Diccionario donde están las palabras validas.
+@param "<letras>" las letras disponibles que se utilizan para formar palabras.
+
+En la siguiente imagen se muestra de forma dinámica su funcionamiento
+
+
+## partida_letras_eficiente.cpp (comprueba la clase Solver )
+ Se encarga de construir el LettersSet para la partida a partir del archivo de letras,
+ el Dictionary con las palabras que se consideran soluciones correctas, el Solver que va a jugar la
+ partida y la LettersBag que se utilizará para extraer las letras. Una vez construidos los TDAs
+ necesarios, extraerá las letras con las que se jugará la partida, utilizará el Solver (getSolutionsEficiente) para buscar las
+ soluciones, e imprimirá por pantalla tanto las letras para la partida como las mejores soluciones que
+ se pueden obtener con dichas letras y la puntuación de dichas soluciones.
+
+>_partida_letras_ \<letras\> \<diccionario\> \<modo\> \<cantletras\>
+@param "<diccionario>" Diccionario donde están las palabras validas.
+@param "<letras>" Fichero con las letras y sus respectivas repeticiones y puntuación.
+@param "<modo>" Modo de juego (L = longitud, P = puntuación)
+@param "<cantletras>" Cantidad de letras para la partida.
+
+En la siguiente imagen se muestra de forma dinámica su funcionamiento
+
+@image html ejemplosolvereficiente.png
+
+
+*/.
